@@ -5,7 +5,7 @@ var time = 250, timer, countDown = 3;
 var xp = 0, coins = 0;
 var playing = false;
 var name = false;
-var lives = 10;
+var lives = 3, numWrong = 0;
 muteMusic = false, muteSound = false;
 
 
@@ -105,7 +105,7 @@ function getUserChoice(click_id) {
             if (time == 0){
              clearInterval(timer);
              timer = false;
-             }
+         }
             $('#timer').html(time-- + " donkey seconds");
             if (time >= 0) {
                 $('.progress-bar').html(time); //text on progress bar
@@ -127,19 +127,23 @@ function getUserChoice(click_id) {
     else {
         var red = document.getElementById("redTile");
         resetAudio(red);
+        numWrong++;
         $("#" + click_id).addClass("wrong"); //makes cell red
-        $(".lives").html((lives--) + " LIVES");
-     	$(".lives").css({"color": "#ff0000"});
-        setTimeout(function(){$(".lives").css({"color": "#00ff00"});}, (250));
         setTimeout(function(){$("#" + click_id).removeClass("wrong");}, (250));//removes red
     }
 
     //regresses, pathlength
-    if (lives == 0) {
+    if (numWrong == 2) {
+        numWrong = 0;
      	disableUserChoice();
-     	$(".lives").html(lives + " LIVES");
-        if (rows > 1 && cols > 1) rows-- && cols--;
-        lives = 1;
+        if (rows > 1 && cols > 1) 
+            rows-- && cols--;
+        if (lives != 1) {
+            $(".lives").css({"color": "#ff0000"});
+            $(".lives").html((--lives) + " LIVES");
+            setTimeout(function(){$(".lives").css({"color": "#00ff00"});}, (250));
+        } else
+            alert("ur a failure");
         setTimeout(function() {
             roundDelay();
         }, 500);
@@ -155,7 +159,7 @@ function getUserChoice(click_id) {
     }
 
     if (path[clickCount] == -3) {
- 	disableUserChoice();
+        disableUserChoice();
         $(".coins").html((coins+=10) + " COINS");
          pathLength++;
          setTimeout(function() {

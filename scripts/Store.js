@@ -216,7 +216,6 @@ function checkCash(moneyz){
 /*store music*/
 function playStoreBG(){
     var storeBG = document.getElementById("BGmusic");
-    storeBG.volume = 0.2;
     storeBG.muted = muteMusic;
     storeBG.play();
 }
