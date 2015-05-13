@@ -6,8 +6,10 @@ var xp = 0, coins = 0;
 var playing = false;
 var name = false;
 var lives = 3, numWrong = 0;
-muteMusic = false, muteSound = false;
-
+var muteMusic = false, muteSound = false;
+var money = 10, exp = 1;
+var isAllIn = false;
+var streak = 0;
 
 //Draws grid
 function init(rows,cols) {
@@ -25,7 +27,7 @@ function init(rows,cols) {
 
 /*Called after user name submitted*/
 function play() {
-    $(".ui-content").css({"margin-top":"15%"});
+    $(".ui-content").css({"margin-top":"35%"});
     playing = true; //done once, prevents actions before playing
 
     name = $("#name").attr("value"); //adds to form for leaderboard
@@ -105,7 +107,7 @@ function getUserChoice(click_id) {
             if (time == 0){
              clearInterval(timer);
              timer = false;
-         }
+             }
             $('#timer').html(time-- + " donkey seconds");
             if (time >= 0) {
                 $('.progress-bar').html(time); //text on progress bar
@@ -121,29 +123,29 @@ function getUserChoice(click_id) {
         $("#" + click_id).addClass("selected"); //makes cell green
         setTimeout(function(){$("#" + click_id).removeClass("selected");}, (250)); //removes green
         clickCount++;
-        $(".xp").html(++xp + "XP"); //1 xp per correct cell
+        xp += exp;
+        $(".xp").html(xp + "XP"); //1 xp per correct cell
         $("#userScore").attr("value", xp); //used for leaderboard score
     }
     else {
         var red = document.getElementById("redTile");
         resetAudio(red);
-        numWrong++;
         $("#" + click_id).addClass("wrong"); //makes cell red
         setTimeout(function(){$("#" + click_id).removeClass("wrong");}, (250));//removes red
-    }
+		numWrong++;
+	}
 
     //regresses, pathlength
     if (numWrong == 2) {
-        numWrong = 0;
      	disableUserChoice();
-        if (rows > 1 && cols > 1) 
-            rows-- && cols--;
-        if (lives != 1) {
-            $(".lives").css({"color": "#ff0000"});
-            $(".lives").html((--lives) + " LIVES");
-            setTimeout(function(){$(".lives").css({"color": "#00ff00"});}, (250));
-        } else
-            alert("ur a failure");
+     	$(".lives").html(--lives + " <img src='images/donkey.png' alt='LIVES'/>");
+    	$("#lives1").css({"color": "#ff0000"});
+        setTimeout(function(){$("#lives1").css({"color": "#00ff00"});}, (250));
+		pathLength--;
+		isAllIn = false;
+        streak = 0;
+        if (rows > 1 && cols > 1) rows-- && cols--;
+        numWrong = 0;
         setTimeout(function() {
             roundDelay();
         }, 500);
@@ -159,9 +161,19 @@ function getUserChoice(click_id) {
     }
 
     if (path[clickCount] == -3) {
-        disableUserChoice();
-        $(".coins").html((coins+=10) + " COINS");
+		disableUserChoice();
+        $(".coins").html((coins+=money) + " COINS");
          pathLength++;
+		 if(isAllIn){
+             streak++;
+             if(streak == 10){
+             	$(".coins").html((coins+= 120) + " COINS");
+             	xp += 120;
+             	$(".xp").html(xp + "XP");
+             	isAllIn = false;
+             	streak = 0;
+             }
+         }
          setTimeout(function() {
             roundDelay();
         }, 500);
@@ -180,12 +192,17 @@ function getUserChoice(click_id) {
 }
 
 function reset() {
+    exp = 1;
+    money = 10;
     time = 250 * pathLength;
 	path = new Array(0);
 	clickCount = 0;
 	stepCount = 0;
-    $(".lives").html(lives + " LIVES");
-	setUpRound(rows, cols); //makes new round
+	numWrong = 0;
+	 $('.progress-bar').html(time);//text on progress bar
+     $('.progress-bar').css('width', Math.floor((time / (250 * pathLength)) * 100) + '%');//red part of progress bar
+     $('progress-bar').attr('aria-valuenow', ((time / (250 * pathLength)) * 100));
+	setUpRound(rows, cols);//makes new round
 }
 
 function roundDelay() {	
@@ -219,14 +236,22 @@ function playTransition(){
 }
 
 function gridChange() {
-    if (pathLength == 2 && cols <= 5) {
-        cols++;
-        rows++;
-    }
-    if (pathLength % 3 == 1) {
-        cols++;
-        rows++;
-    }
+    if(pathLength - 10 > 0){
+        	cols = 5;
+        	rows = 5;
+        }else if(pathLength - 7 > 0){
+        	cols = 4;
+        	rows = 4;        
+        }else if(pathLength - 4 > 0){
+        	cols = 3;
+        	rows = 3;        
+        }else if(pathLength - 1 > 0){
+        	cols = 2;
+        	rows = 2;        
+        } else{
+        	cols = 1;
+        	rows = 1;
+        }
 }
 
 function stopIntro() {
