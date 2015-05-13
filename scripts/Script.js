@@ -25,7 +25,7 @@ function init(rows,cols) {
 
 /*Called after user name submitted*/
 function play() {
-    $(".ui-content").css({"margin-top":"5%"});
+    $(".ui-content").css({"margin-top":"15%"});
     playing = true; //done once, prevents actions before playing
 
     name = $("#name").attr("value"); //adds to form for leaderboard
