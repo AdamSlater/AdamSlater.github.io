@@ -86,7 +86,7 @@ function enableUserChoice() {
     $(".cell").attr("onclick", "getUserChoice(this.id)");
 	firstClick = false;
     $(".ui-icon-pause").attr("href", "index.html#store-page");
-    $(".ui-icon-pause").attr("onclick", "pause();playTransition();playStoreBG()");
+    $(".ui-icon-pause").attr("onclick", "pause();playTransition();playStoreBG();stopGameMusic()");
 }
 
 function disableUserChoice() {
@@ -138,7 +138,7 @@ function getUserChoice(click_id) {
     //regresses, pathlength
     if (numWrong == 2) {
      	disableUserChoice();
-        if (lives == 1) {
+        if (lives != 1) {
             $(".lives").html(--lives + " <img src='images/donkey.png' alt='LIVES'/>");
             $("#lives1").css({"color": "#ff0000"});
             setTimeout(function(){$("#lives1").css({"color": "#00ff00"});}, (250));
@@ -303,4 +303,15 @@ function resetAudio(audio) {
     audio.pause();
     audio.currentTime = 0;
     audio.play();
+}
+
+function playGameMusic(){
+    var game = document.getElementById("gameMusic");
+    game.volume = 0.2;
+    game.play();
+}
+
+function stopGameMusic(){
+    var game = document.getElementById("gameMusic");
+    game.pause();    
 }
