@@ -138,18 +138,12 @@ function getUserChoice(click_id) {
     //regresses, pathlength
     if (numWrong == 2) {
      	disableUserChoice();
-<<<<<<< HEAD
      	if (lives != 1) {
 	    	$(".lives").css({"color": "#ff0000"});		            
             $(".lives").html(--lives + " <img src='images/donkey.png' alt='LIVES'/>");
             setTimeout(function(){$(".lives").css({"color": "#00ff00"});}, (250));
         } else
             alert("ur a failure");
-=======
-     	$(".lives").html(--lives + " <img src='images/donkey.png' alt='LIVES'/>");
-    	$("#lives1").css({"color": "#ff0000"});
-        setTimeout(function(){$("#lives1").css({"color": "#00ff00"});}, (250));
->>>>>>> 9e95e7dc8a93b7cd7f2f42bd05df766dc29d3545
 		pathLength--;
 		isAllIn = false;
         streak = 0;
@@ -171,6 +165,7 @@ function getUserChoice(click_id) {
 
     if (path[clickCount] == -3) {
 		disableUserChoice();
+        endRoundReward();
         $(".coins").html((coins+=money) + " COINS");
          pathLength++;
 		 if(isAllIn){
@@ -245,22 +240,22 @@ function playTransition(){
 }
 
 function gridChange() {
-    if(pathLength - 10 > 0){
-        	cols = 5;
-        	rows = 5;
-        }else if(pathLength - 7 > 0){
-        	cols = 4;
-        	rows = 4;        
-        }else if(pathLength - 4 > 0){
-        	cols = 3;
-        	rows = 3;        
-        }else if(pathLength - 1 > 0){
-        	cols = 2;
-        	rows = 2;        
-        } else{
-        	cols = 1;
-        	rows = 1;
-        }
+    if (pathLength - 10 > 0){
+        cols = 5;
+        rows = 5;
+    }else if (pathLength - 7 > 0){
+        cols = 4;
+        rows = 4;        
+    }else if (pathLength - 4 > 0){
+        cols = 3;
+        rows = 3;        
+    }else if (pathLength - 1 > 0){
+        cols = 2;
+        rows = 2;        
+    } else {
+        cols = 1;
+        rows = 1;
+    }
 }
 
 function stopIntro() {
@@ -275,8 +270,7 @@ function muteSounds() {
     if (muteSound) {
         $(".sound").prop('muted', false);
         muteSound = false;
-    }
-    else {
+    } else {
         $(".sound").prop('muted', true);
         muteSound = true;
     }
@@ -290,8 +284,7 @@ function muteMusics() {
     if (muteMusic) {
         $(".music").prop('muted', false);
         muteMusic = false;
-    }
-    else {
+    } else {
         $(".music").prop('muted', true);
         muteMusic = true;
     }
@@ -311,7 +304,7 @@ function resetAudio(audio) {
 
 function playGameMusic(){
     var game = document.getElementById("gameMusic");
-    game.volume = 0.2;
+    game.volume = 0.1;
     game.play();
 }
 
@@ -323,9 +316,16 @@ function stopGameMusic(){
 function mouseClick() {
     var click = document.getElementById("mouseClick");
     click.play();
-<<<<<<< HEAD
 }
-=======
+
+function storePurchase() {
+    var click = document.getElementById("cashRegister");
+    click.play();
+}
+
+function endRoundReward() {
+    var click = document.getElementById("coinDrop");
+    click.play();
 }
 
 window.onunload = window.onbeforeunload = (function () {
@@ -333,4 +333,3 @@ window.onunload = window.onbeforeunload = (function () {
     window.location.href = '#main-page';
     location.reload();
 })
->>>>>>> 9e95e7dc8a93b7cd7f2f42bd05df766dc29d3545
