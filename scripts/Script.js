@@ -86,7 +86,7 @@ function enableUserChoice() {
     $(".cell").attr("onclick", "getUserChoice(this.id)");
 	firstClick = false;
     $(".ui-icon-pause").attr("href", "index.html#store-page");
-    $(".ui-icon-pause").attr("onclick", "pause();playTransition();playStoreBG();stopGameMusic()");
+    $(".ui-icon-pause").attr("onclick", "pause();playTransition();playStoreBG();stopGameMusic();mouseClick()");
 }
 
 function disableUserChoice() {
@@ -314,4 +314,9 @@ function playGameMusic(){
 function stopGameMusic(){
     var game = document.getElementById("gameMusic");
     game.pause();    
+}
+
+function mouseClick() {
+    var click = document.getElementById("mouseClick");
+    click.play();
 }
