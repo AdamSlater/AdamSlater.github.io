@@ -138,9 +138,12 @@ function getUserChoice(click_id) {
     //regresses, pathlength
     if (numWrong == 2) {
      	disableUserChoice();
-     	$(".lives").html(--lives + " <img src='images/donkey.png' alt='LIVES'/>");
-    	$("#lives1").css({"color": "#ff0000"});
-        setTimeout(function(){$("#lives1").css({"color": "#00ff00"});}, (250));
+     	if (lives != 1) {
+	    	$(".lives").css({"color": "#ff0000"});		            
+            $(".lives").html(--lives + " <img src='images/donkey.png' alt='LIVES'/>");
+            setTimeout(function(){$(".lives").css({"color": "#00ff00"});}, (250));
+        } else
+            alert("ur a failure");
 		pathLength--;
 		isAllIn = false;
         streak = 0;
