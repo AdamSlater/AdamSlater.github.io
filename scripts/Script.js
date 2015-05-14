@@ -27,7 +27,7 @@ function init(rows,cols) {
 
 /*Called after user name submitted*/
 function play() {
-    $(".ui-content").css({"margin-top":"20%"});
+    $(".ui-content").css({"margin-top":"35%"});
     playing = true; //done once, prevents actions before playing
 
     name = $("#name").attr("value"); //adds to form for leaderboard
@@ -138,12 +138,9 @@ function getUserChoice(click_id) {
     //regresses, pathlength
     if (numWrong == 2) {
      	disableUserChoice();
-        if (lives != 1) {
-            $(".lives").html(--lives + " <img src='images/donkey.png' alt='LIVES'/>");
-            $("#lives1").css({"color": "#ff0000"});
-            setTimeout(function(){$("#lives1").css({"color": "#00ff00"});}, (250));
-        } else
-            alert("ur a failure");
+     	$(".lives").html(--lives + " <img src='images/donkey.png' alt='LIVES'/>");
+    	$("#lives1").css({"color": "#ff0000"});
+        setTimeout(function(){$("#lives1").css({"color": "#00ff00"});}, (250));
 		pathLength--;
 		isAllIn = false;
         streak = 0;
