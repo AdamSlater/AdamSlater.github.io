@@ -138,12 +138,18 @@ function getUserChoice(click_id) {
     //regresses, pathlength
     if (numWrong == 2) {
      	disableUserChoice();
+<<<<<<< HEAD
      	if (lives != 1) {
 	    	$(".lives").css({"color": "#ff0000"});		            
             $(".lives").html(--lives + " <img src='images/donkey.png' alt='LIVES'/>");
             setTimeout(function(){$(".lives").css({"color": "#00ff00"});}, (250));
         } else
             alert("ur a failure");
+=======
+     	$(".lives").html(--lives + " <img src='images/donkey.png' alt='LIVES'/>");
+    	$("#lives1").css({"color": "#ff0000"});
+        setTimeout(function(){$("#lives1").css({"color": "#00ff00"});}, (250));
+>>>>>>> 9e95e7dc8a93b7cd7f2f42bd05df766dc29d3545
 		pathLength--;
 		isAllIn = false;
         streak = 0;
@@ -267,11 +273,11 @@ function muteSounds() {
     path += (!muteSound) ? "soundmute.png" : "sound.png";
     $("#muteSound").attr("src", path);
     if (muteSound) {
-        $("audio:not([autoplay])").prop('muted', false);
+        $(".sound").prop('muted', false);
         muteSound = false;
     }
     else {
-        $("audio:not([autoplay])").prop('muted', true);
+        $(".sound").prop('muted', true);
         muteSound = true;
     }
 }
@@ -282,13 +288,11 @@ function muteMusics() {
     $("#muteMusic").attr("src", path);
 
     if (muteMusic) {
-        $("#introMusic").prop('muted', false);
-        $("#BGmusic").prop('muted', false);
+        $(".music").prop('muted', false);
         muteMusic = false;
     }
     else {
-        $("#introMusic").prop('muted', true);
-        $("#BGmusic").prop('muted', true);
+        $(".music").prop('muted', true);
         muteMusic = true;
     }
 }
@@ -319,4 +323,14 @@ function stopGameMusic(){
 function mouseClick() {
     var click = document.getElementById("mouseClick");
     click.play();
+<<<<<<< HEAD
 }
+=======
+}
+
+window.onunload = window.onbeforeunload = (function () {
+    console.log("prints");
+    window.location.href = '#main-page';
+    location.reload();
+})
+>>>>>>> 9e95e7dc8a93b7cd7f2f42bd05df766dc29d3545
